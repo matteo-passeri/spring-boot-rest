@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 @RestController
 class EmployeeController {
 
@@ -43,7 +45,11 @@ class EmployeeController {
     // end::get-aggregate-root[]
 
     @PostMapping("/employees")
-    ResponseEntity<?> newEmployee(@RequestBody Employee newEmployee) {
+    ResponseEntity<?> newEmployee(@Valid @RequestBody Employee newEmployee) {        
+        /* if (errors.hasErrors()) {
+            //return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
+        } */
+        
 
         EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
 
@@ -63,7 +69,7 @@ class EmployeeController {
     }
 
     @PutMapping("/employees/{id}")
-    ResponseEntity<?> replaceEmployee(@RequestBody Employee newEmployee, @PathVariable Long id) {
+    ResponseEntity<?> replaceEmployee(@Valid @RequestBody Employee newEmployee, @PathVariable Long id) {
 
         Employee updatedEmployee = repository.findById(id) //
                 .map(employee -> {

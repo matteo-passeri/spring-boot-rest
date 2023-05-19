@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 
 @Entity
 class Employee {
@@ -14,10 +15,11 @@ class Employee {
   // validation --> jakarta.validation
   // obbligatorio
   // solo a-z
-  // altrimenti messaggio errore to frontend --- addUser(@Valid @RequestBody User user)
-  private String firstName;
-  @NotBlank(message = "Name is mandatory")
+  // altrimenti messaggio errore to frontend
+  @NotBlank(message = "Lastname is mandatory.")
+  @Pattern(regexp = "^[A-Za-z]*$", message = "Name must cointains only letters.")
   private String lastName;
+  private String firstName;
   private String role;
 
   Employee() {}
