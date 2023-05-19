@@ -5,12 +5,18 @@ import java.util.Objects;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 class Employee {
 
   private @Id @GeneratedValue Long id;
+  // validation --> jakarta.validation
+  // obbligatorio
+  // solo a-z
+  // altrimenti messaggio errore to frontend --- addUser(@Valid @RequestBody User user)
   private String firstName;
+  @NotBlank(message = "Name is mandatory")
   private String lastName;
   private String role;
 
