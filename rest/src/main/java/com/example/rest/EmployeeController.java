@@ -9,7 +9,6 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import org.springframework.validation.Errors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,11 +49,6 @@ class EmployeeController {
 
     @PostMapping("/employees")
     ResponseEntity<?> newEmployee(@Valid @RequestBody Employee newEmployee) {
-        /* if (errors.hasErrors()) {
-            //return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
-        } */
-        
-
         EntityModel<Employee> entityModel = assembler.toModel(repository.save(newEmployee));
 
         return ResponseEntity //
@@ -67,7 +61,7 @@ class EmployeeController {
     EntityModel<Employee> one(@PathVariable Long id) {
 
         Employee employee = repository.findById(id) //
-                .orElseThrow(() -> new EmployeeNotFoundException(id));
+                .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %d not found", id))));
 
         return assembler.toModel(employee);
     }
@@ -82,9 +76,6 @@ class EmployeeController {
                     return repository.save(employee);
                 }) //
                 .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %d not found", id)))
-
-                    /* newEmployee.setId(id);
-                    return repository.save(newEmployee); */
                 );
 
         EntityModel<Employee> entityModel = assembler.toModel(updatedEmployee);
@@ -97,8 +88,11 @@ class EmployeeController {
     @DeleteMapping("/employees/{id}")
     ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 
+        repository.findById(id) //
+                .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %d not found", id))));
+
         repository.deleteById(id);
 
-        return ResponseEntity.noContent().build();
+        return new ResponseEntity<String>("User with id" + id + " was deleted.", HttpStatus.OK);
     }
 }
