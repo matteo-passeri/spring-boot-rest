@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.validation.Errors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import jakarta.validation.Valid;
 
@@ -45,7 +49,7 @@ class EmployeeController {
     // end::get-aggregate-root[]
 
     @PostMapping("/employees")
-    ResponseEntity<?> newEmployee(@Valid @RequestBody Employee newEmployee) {        
+    ResponseEntity<?> newEmployee(@Valid @RequestBody Employee newEmployee) {
         /* if (errors.hasErrors()) {
             //return new ResponseEntity(new ApiErrors(errors), HttpStatus.BAD_REQUEST);
         } */
@@ -77,10 +81,11 @@ class EmployeeController {
                     employee.setRole(newEmployee.getRole());
                     return repository.save(employee);
                 }) //
-                .orElseGet(() -> {
-                    newEmployee.setId(id);
-                    return repository.save(newEmployee);
-                });
+                .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id %d not found", id)))
+
+                    /* newEmployee.setId(id);
+                    return repository.save(newEmployee); */
+                );
 
         EntityModel<Employee> entityModel = assembler.toModel(updatedEmployee);
 
