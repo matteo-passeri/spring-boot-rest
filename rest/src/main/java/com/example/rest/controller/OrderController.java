@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.rest.exception.OrderNotFoundException;
+import com.example.rest.exception.ResourceNotFoundException;
 import com.example.rest.model.Order;
 import com.example.rest.model.Status;
 import com.example.rest.repository.OrderRepository;
@@ -52,7 +52,7 @@ class OrderController {
     EntityModel<Order> one(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id) //
-                .orElseThrow(() -> new OrderNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
 
         return assembler.toModel(order);
     }
@@ -72,7 +72,7 @@ class OrderController {
     ResponseEntity<?> cancel(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id) //
-                .orElseThrow(() -> new OrderNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
 
         if (order.getStatus() == Status.IN_PROGRESS) {
             order.setStatus(Status.CANCELLED);
@@ -91,7 +91,7 @@ class OrderController {
     ResponseEntity<?> complete(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id) //
-                .orElseThrow(() -> new OrderNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException(id));
 
         if (order.getStatus() == Status.IN_PROGRESS) {
             order.setStatus(Status.COMPLETED);
