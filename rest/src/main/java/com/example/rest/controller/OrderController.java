@@ -1,4 +1,4 @@
-package com.example.rest;
+package com.example.rest.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.rest.exception.OrderNotFoundException;
+import com.example.rest.model.Order;
+import com.example.rest.model.Status;
+import com.example.rest.repository.OrderRepository;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController

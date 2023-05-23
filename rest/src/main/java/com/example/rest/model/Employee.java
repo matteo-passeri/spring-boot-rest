@@ -1,4 +1,4 @@
-package com.example.rest;
+package com.example.rest.model;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
-class Employee {
+public class Employee {
 
   private @Id @GeneratedValue Long id;
   // validation --> jakarta.validation

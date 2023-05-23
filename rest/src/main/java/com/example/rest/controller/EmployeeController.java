@@ -1,4 +1,4 @@
-package com.example.rest;
+package com.example.rest.controller;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.example.rest.model.Employee;
+import com.example.rest.repository.EmployeeRepository;
 
 import jakarta.validation.Valid;
 

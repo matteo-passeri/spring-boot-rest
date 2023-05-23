@@ -1,4 +1,4 @@
-package com.example.rest;
+package com.example.rest.exception;
 
 import java.util.Collections;
 import java.util.HashMap;

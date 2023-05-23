@@ -1,10 +1,13 @@
-package com.example.rest;
+package com.example.rest.model;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.example.rest.repository.EmployeeRepository;
+import com.example.rest.repository.OrderRepository;
 
 @Configuration
 class LoadDatabase {

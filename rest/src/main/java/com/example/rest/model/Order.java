@@ -1,4 +1,4 @@
-package com.example.rest;
+package com.example.rest.model;
 
 import java.util.Objects;
 
@@ -9,7 +9,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "CUSTOMER_ORDER")
-class Order {
+public class Order {
 
   private @Id @GeneratedValue Long id;
 

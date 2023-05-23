@@ -1,4 +1,4 @@
-package com.example.rest;
+package com.example.rest.exception;
 
 class EmployeeNotFoundException extends RuntimeException {
 
