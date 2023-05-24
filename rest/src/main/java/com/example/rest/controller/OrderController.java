@@ -52,7 +52,7 @@ class OrderController {
     EntityModel<Order> one(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id) //
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Not found Order with id = " + id));
 
         return assembler.toModel(order);
     }
@@ -72,7 +72,7 @@ class OrderController {
     ResponseEntity<?> cancel(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id) //
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Not found Order with id = " + id));
 
         if (order.getStatus() == Status.IN_PROGRESS) {
             order.setStatus(Status.CANCELLED);
@@ -91,7 +91,7 @@ class OrderController {
     ResponseEntity<?> complete(@PathVariable Long id) {
 
         Order order = orderRepository.findById(id) //
-                .orElseThrow(() -> new ResourceNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("Not found Order with id = " + id));
 
         if (order.getStatus() == Status.IN_PROGRESS) {
             order.setStatus(Status.COMPLETED);

@@ -64,7 +64,7 @@ class EmployeeController {
     EntityModel<Employee> one(@PathVariable Long id) {
 
         Employee employee = repository.findById(id) //
-                .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id \'%d\' not found", id))));
+                .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Employee with id \'%d\' not found", id))));
 
         return assembler.toModel(employee);
     }
@@ -78,7 +78,7 @@ class EmployeeController {
                     employee.setRole(newEmployee.getRole());
                     return repository.save(employee);
                 }) //
-                .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id \'%d\' not found", id)))
+                .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Employee with id \'%d\' not found", id)))
                 );
 
         EntityModel<Employee> entityModel = assembler.toModel(updatedEmployee);
@@ -92,7 +92,7 @@ class EmployeeController {
     ResponseEntity<?> deleteEmployee(@PathVariable Long id) {
 
         repository.findById(id) //
-                .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("User with id \'%d\' not found", id))));
+                .orElseThrow(() -> (new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("Employee with id \'%d\' not found", id))));
 
         repository.deleteById(id);
 
